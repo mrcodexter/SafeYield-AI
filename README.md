@@ -1,20 +1,35 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# SafeYield AI – Secure Cross-Chain DeFi Strategy Manager
 
-# Run and deploy your AI Studio app
+## Overview
+SafeYield AI is a next-generation DeFi portfolio and strategy manager built on Pacifica. It combines automated yield optimization, AI-driven risk analysis, and secure execution in a single platform.
 
-This contains everything you need to run your app locally.
+## Key Features
+- AI-powered risk engine (liquidation prevention, auto rebalancing)
+- Automated strategies (basis trading, vault-based yield farming)
+- Modular smart vault system
+- Non-custodial wallet integration
+- Transaction simulation before execution
+- Real-time analytics dashboard (PnL, risk score, exposure)
+- Cross-chain deposit interface
+- Strategy marketplace (follow top-performing strategies)
 
-View your app in AI Studio: https://ai.studio/apps/0bfdba9c-f327-4f11-a5b5-939871c18c30
+## How It Works
+SafeYield AI analyzes on-chain data, funding rates, and liquidity conditions to suggest and execute optimal DeFi strategies.
 
-## Run Locally
+## Security
+- Non-custodial (users retain full control)
+- Smart contract audit-ready design
+- Multi-layer risk alerts
+- Fail-safe mechanisms
 
-**Prerequisites:**  Node.js
+## Tech Stack
+- React / Next.js
+- Node.js
+- Solana (Pacifica)
+- Web3.js / Phantom
 
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Getting Started
+```bash
+npm install
+npm run dev
+```
