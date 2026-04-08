@@ -1,20 +1,20 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# SafeYield AI – Secure Cross-Chain DeFi Strategy Manager
 
-# Run and deploy your AI Studio app
+## Overview
+SafeYield AI is a secure and automated DeFi portfolio manager that helps users maximize yield while minimizing risk.
 
-This contains everything you need to run your app locally.
+## Features
+- AI-powered risk management
+- Automated DeFi strategies
+- Smart vault system
+- Non-custodial wallet integration
+- Real-time analytics dashboard
 
-View your app in AI Studio: https://ai.studio/apps/0bfdba9c-f327-4f11-a5b5-939871c18c30
+## Tech Stack
+- React
+- Node.js
+- Solana
 
-## Run Locally
-
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Getting Started
+npm install  
+npm run dev
