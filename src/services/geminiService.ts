@@ -1,6 +1,17 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+let aiInstance: GoogleGenAI | null = null;
+
+const getAI = () => {
+  if (!aiInstance) {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error("GEMINI_API_KEY is not defined. Please ensure it is set in the environment.");
+    }
+    aiInstance = new GoogleGenAI({ apiKey });
+  }
+  return aiInstance;
+};
 
 export interface StrategyRecommendation {
   name: string;
@@ -20,6 +31,7 @@ export interface RiskAnalysis {
 
 export const analyzeStrategies = async (marketData: string): Promise<StrategyRecommendation[]> => {
   try {
+    const ai = getAI();
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: `Analyze the following DeFi market data and recommend 3 optimal yield strategies for SafeYield AI on Pacifica. 
@@ -49,12 +61,13 @@ export const analyzeStrategies = async (marketData: string): Promise<StrategyRec
     return JSON.parse(response.text || "[]");
   } catch (error) {
     console.error("AI Strategy Analysis Error:", error);
-    return [];
+    throw error; // Let the component handle it
   }
 };
 
 export const getRiskAnalysis = async (positions: any): Promise<RiskAnalysis> => {
   try {
+    const ai = getAI();
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: `Perform a deep risk analysis for these DeFi positions: ${JSON.stringify(positions)}.
@@ -79,11 +92,6 @@ export const getRiskAnalysis = async (positions: any): Promise<RiskAnalysis> => 
     return JSON.parse(response.text || "{}");
   } catch (error) {
     console.error("AI Risk Analysis Error:", error);
-    return {
-      overallRiskScore: 0,
-      warnings: ["AI analysis unavailable"],
-      recommendations: ["Manual review required"],
-      marketSentiment: "Neutral"
-    };
+    throw error; // Let the component handle it
   }
 };

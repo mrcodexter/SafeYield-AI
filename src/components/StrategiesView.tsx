@@ -199,8 +199,12 @@ export default function StrategiesView({ onInvest }: { onInvest: (name: string) 
   const [filter, setFilter] = React.useState<string>('All');
 
   const handleCopy = (id: string) => {
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 2000);
+    navigator.clipboard.writeText(id).then(() => {
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2000);
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
   };
 
   const filteredStrategies = EXTENDED_STRATEGIES.filter(strategy => {

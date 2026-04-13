@@ -143,6 +143,7 @@ export default function Dashboard() {
   const [aiRecommendations, setAiRecommendations] = React.useState<StrategyRecommendation[]>([]);
   const [riskAnalysis, setRiskAnalysis] = React.useState<RiskAnalysis | null>(null);
   const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
   
   // View State
   const [currentView, setCurrentView] = React.useState<'dashboard' | 'strategies'>('dashboard');
@@ -154,14 +155,21 @@ export default function Dashboard() {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      const [recs, risk] = await Promise.all([
-        analyzeStrategies("BTC Price: $65k, ETH Price: $3.5k, Funding: 0.01%"),
-        getRiskAnalysis({ btc_long: 1.5, eth_staking: 2.0 })
-      ]);
-      setAiRecommendations(recs);
-      setRiskAnalysis(risk);
-      setLoading(false);
+      try {
+        setLoading(true);
+        setError(null);
+        const [recs, risk] = await Promise.all([
+          analyzeStrategies("BTC Price: $65k, ETH Price: $3.5k, Funding: 0.01%"),
+          getRiskAnalysis({ btc_long: 1.5, eth_staking: 2.0 })
+        ]);
+        setAiRecommendations(recs);
+        setRiskAnalysis(risk);
+      } catch (err) {
+        console.error("Dashboard Data Fetch Error:", err);
+        setError(err instanceof Error ? err.message : "Failed to fetch AI insights");
+      } finally {
+        setLoading(false);
+      }
     };
     fetchData();
   }, []);
@@ -373,6 +381,14 @@ export default function Dashboard() {
                 <div className="flex flex-col items-center justify-center py-12">
                   <div className="w-12 h-12 border-4 border-pacifica-blue/20 border-t-pacifica-blue rounded-full animate-spin mb-4" />
                   <p className="text-gray-400 animate-pulse">Analyzing market conditions on Pacifica...</p>
+                </div>
+              ) : error ? (
+                <div className="p-6 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-4">
+                  <AlertTriangle className="w-6 h-6 text-red-500" />
+                  <div>
+                    <p className="text-red-500 font-bold">AI Insights Unavailable</p>
+                    <p className="text-red-500/70 text-sm">{error}</p>
+                  </div>
                 </div>
               ) : (
                 <div className="space-y-4">
